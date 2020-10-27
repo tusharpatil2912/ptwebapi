@@ -30,6 +30,9 @@ namespace ProjectTracker
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options => options.AddDefaultPolicy(
+                builder => builder.AllowAnyOrigin()
+            ));
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IProjectService, ProjectService>();
             services.AddDbContext<ProjectDBContext>(p=>p.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
@@ -46,6 +49,8 @@ namespace ProjectTracker
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 
