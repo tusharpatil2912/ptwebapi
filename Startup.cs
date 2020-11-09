@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,11 +33,17 @@ namespace ProjectTracker
         {
             services.AddControllers();
             services.AddCors(options => options.AddDefaultPolicy(
-                builder => builder.AllowAnyOrigin()
+                builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
             ));
+            services.Configure<FormOptions>(o =>
+            {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IProjectService, ProjectService>();
-            services.AddDbContext<ProjectDBContext>(p=>p.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ProjectDBContext>(p => p.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +52,10 @@ namespace ProjectTracker
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
@@ -54,9 +66,16 @@ namespace ProjectTracker
 
             app.UseAuthorization();
 
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync("Please Enter Valid API URL");
             });
         }
     }
