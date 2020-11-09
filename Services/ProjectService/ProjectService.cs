@@ -35,5 +35,21 @@ namespace ProjectTracker.Services.ProjectService
         {
             return _mapper.Map<GetProjectDto>(_context.Projects.FirstOrDefault(p => p.Id == id));
         }
+
+        public async Task<GetProjectDto> UpdateProject(UpdateProjectDto updatedproject)
+        {
+            GetProjectDto projectdto = new GetProjectDto();
+            Project project = _context.Projects.FirstOrDefault(p => p.Id == updatedproject.Id);
+            project.Name = updatedproject.Name;
+            project.Description =updatedproject.Description;
+            project.Owner = updatedproject.Owner;
+            project.SME = updatedproject.SME;
+
+            projectdto = _mapper.Map<GetProjectDto>(project);
+            _context.SaveChanges();
+            return projectdto;
+
+        }
+
     }
 }

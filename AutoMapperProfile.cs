@@ -10,6 +10,7 @@ namespace ProjectTracker
         {
             CreateMap<Project, GetProjectDto>();
             CreateMap<AddProjectDto, Project>();
+            CreateMap<UpdateProjectDto, Project>();
         }
     }
 }

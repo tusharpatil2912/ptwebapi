@@ -10,5 +10,6 @@ namespace ProjectTracker.Services.ProjectService
         Task<List<GetProjectDto>> GetAllProjects();
         Task<GetProjectDto> GetProjectById(int id);
         Task<List<GetProjectDto>> AddProject(AddProjectDto newProject);
+        Task<GetProjectDto> UpdateProject(UpdateProjectDto projectdto);
     }
 }
