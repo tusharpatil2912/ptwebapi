@@ -40,7 +40,7 @@ namespace ProjectTracker.Controllers
                 return BadRequest("Bad Request : Id not matching");
             }
             else{
-            return Ok(await _projectService.UpdateProject(projectdto));
+            return Ok(await _projectService.UpdateProject(id,projectdto));
             }
             }
             catch (System.Exception)

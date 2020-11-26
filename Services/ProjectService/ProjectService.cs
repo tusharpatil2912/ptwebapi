@@ -36,7 +36,7 @@ namespace ProjectTracker.Services.ProjectService
             return _mapper.Map<GetProjectDto>(_context.Projects.FirstOrDefault(p => p.Id == id));
         }
 
-        public async Task<GetProjectDto> UpdateProject(UpdateProjectDto updatedproject)
+        public async Task<GetProjectDto> UpdateProject(int id,UpdateProjectDto updatedproject)
         {
             GetProjectDto projectdto = new GetProjectDto();
             Project project = _context.Projects.FirstOrDefault(p => p.Id == updatedproject.Id);
