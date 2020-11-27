@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ProjectTracker.Migrations
 {
-    public partial class devmigration : Migration
+    public partial class latestmg : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,8 @@ namespace ProjectTracker.Migrations
                     ProjectId = table.Column<int>(nullable: false),
                     IssueName = table.Column<string>(nullable: true),
                     IssueDesc = table.Column<string>(nullable: true),
-                    IssueFacedBy = table.Column<string>(nullable: true)
+                    IssueFacedBy = table.Column<string>(nullable: true),
+                    IssueCreatedDate = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,6 +44,23 @@ namespace ProjectTracker.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectTasks",
+                columns: table => new
+                {
+                    TaskId = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProjectId = table.Column<int>(nullable: false),
+                    TaskName = table.Column<string>(nullable: true),
+                    TaskStatus = table.Column<string>(nullable: true),
+                    TaskDetails = table.Column<string>(nullable: true),
+                    EmpId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectTasks", x => x.TaskId);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,23 +92,6 @@ namespace ProjectTracker.Migrations
                 {
                     table.PrimaryKey("PK_Resources", x => x.ResourceId);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "Tasks",
-                columns: table => new
-                {
-                    TaskId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProjectId = table.Column<int>(nullable: false),
-                    TaskName = table.Column<string>(nullable: true),
-                    TaskStatus = table.Column<string>(nullable: true),
-                    TaskDetails = table.Column<string>(nullable: true),
-                    EmpId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tasks", x => x.TaskId);
-                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -102,13 +103,13 @@ namespace ProjectTracker.Migrations
                 name: "Projects");
 
             migrationBuilder.DropTable(
+                name: "ProjectTasks");
+
+            migrationBuilder.DropTable(
                 name: "ProjectTeams");
 
             migrationBuilder.DropTable(
                 name: "Resources");
-
-            migrationBuilder.DropTable(
-                name: "Tasks");
         }
     }
 }

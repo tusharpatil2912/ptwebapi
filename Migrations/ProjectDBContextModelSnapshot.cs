@@ -25,6 +25,9 @@ namespace ProjectTracker.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("IssueCreatedDate")
+                        .HasColumnType("text");
+
                     b.Property<string>("IssueDesc")
                         .HasColumnType("text");
 
@@ -84,6 +87,33 @@ namespace ProjectTracker.Migrations
                     b.ToTable("Projects");
                 });
 
+            modelBuilder.Entity("ProjectTracker.Models.ProjectTask", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("EmpId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TaskDetails")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TaskName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TaskStatus")
+                        .HasColumnType("text");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("ProjectTasks");
+                });
+
             modelBuilder.Entity("ProjectTracker.Models.ProjectTeam", b =>
                 {
                     b.Property<int>("ProjectTeamId")
@@ -124,33 +154,6 @@ namespace ProjectTracker.Migrations
                     b.HasKey("ResourceId");
 
                     b.ToTable("Resources");
-                });
-
-            modelBuilder.Entity("ProjectTracker.Models.Task", b =>
-                {
-                    b.Property<int>("TaskId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("EmpId")
-                        .HasColumnType("text");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("TaskDetails")
-                        .HasColumnType("text");
-
-                    b.Property<string>("TaskName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("TaskStatus")
-                        .HasColumnType("text");
-
-                    b.HasKey("TaskId");
-
-                    b.ToTable("Tasks");
                 });
 #pragma warning restore 612, 618
         }

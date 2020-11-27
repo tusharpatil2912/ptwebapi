@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ProjectTracker.Models
 {
 
-    public class Task
+    public class ProjectTask
     {
         [Key]
         public int TaskId { get; set; }
@@ -15,7 +15,6 @@ namespace ProjectTracker.Models
         public string TaskStatus { get; set; }
         public string TaskDetails { get; set; }
         public string EmpId { get; set; }
-        public Task(){}
 
     }
 

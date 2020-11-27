@@ -26,7 +26,7 @@ namespace ProjectTracker.Services.ProjectService
             // }else{
             // project.Id = _context.Projects.Max(p=> p.Id)+1;
             // }
-            project.CreatedDate = DateTime.Now.ToString();
+            project.CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
             _context.Projects.Add(project);
             _context.SaveChanges();
             return _context.Projects.Select(p => _mapper.Map<GetProjectDto>(p)).ToList();
