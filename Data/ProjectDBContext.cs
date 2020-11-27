@@ -8,5 +8,9 @@ namespace ProjectTracket.Data
         public ProjectDBContext(DbContextOptions<ProjectDBContext> options) : base (options)
         {}
         public DbSet<Project> Projects{get;set;}
+        public DbSet<Task> Tasks{get;set;}
+        public DbSet<Resource> Resources{get;set;}
+        public DbSet<Issue> Issues{get;set;}
+        public DbSet<ProjectTeam> ProjectTeams{get;set;}
     }
 }
