@@ -31,5 +31,24 @@ namespace ProjectTracker.Controllers
         public async Task<ActionResult> addProject(AddProjectDto newProject){
             return Ok(await _projectService.AddProject(newProject));
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> updateProject(int id,UpdateProjectDto projectdto){
+            try
+            {
+                if(id!=projectdto.Id){
+                return BadRequest("Bad Request : Id not matching");
+            }
+            else{
+            return Ok(await _projectService.UpdateProject(id,projectdto));
+            }
+            }
+            catch (System.Exception)
+            {
+                
+                return StatusCode(500, "Internal server error");
+            }
+            
+        }
     }
 }
