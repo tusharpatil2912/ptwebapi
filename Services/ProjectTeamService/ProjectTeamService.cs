@@ -36,9 +36,10 @@ namespace ProjectTracker.Services.ProjectTeamService
             return _context.ProjectTeams.Select(p => _mapper.Map<GetProjectTeamDto>(p)).ToList();
         }
 
-        public async Task<GetProjectTeamDto> GetProjectTeamByProjectId(int id)
+        public async Task<List<GetProjectTeamDto>> GetProjectTeamByProjectId(int id)
         {
-            return _mapper.Map<GetProjectTeamDto>(_context.ProjectTeams.FirstOrDefault(p => p.ProjectId == id));
+            return _context.ProjectTeams.Where(p => p.ProjectId ==id).Select(_mapper.Map<GetProjectTeamDto>).ToList();
+            //return _mapper.Map<GetProjectTeamDto>(_context.ProjectTeams.FirstOrDefault(p => p.ProjectId == id));
         }
 
         public async Task<GetProjectTeamDto> UpdateProjectTeam(int id,UpdateProjectTeamDto updatedprojectteam)

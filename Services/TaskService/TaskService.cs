@@ -36,9 +36,12 @@ namespace ProjectTracker.Services.TaskService
             return _context.ProjectTasks.Select(p => _mapper.Map<GetTaskDto>(p)).ToList();
         }
 
-        public async Task<GetTaskDto> GetTaskByProjectId(int id)
+        public async Task<List<GetTaskDto>> GetTaskByProjectId(int id)
         {
-            return _mapper.Map<GetTaskDto>(_context.ProjectTasks.FirstOrDefault(p => p.ProjectId == id));
+            return _context.ProjectTasks.Where(p => p.ProjectId ==id).Select(_mapper.Map<GetTaskDto>).ToList();
+            //return _mapper.Map<GetTaskDto>(result);
+            //return _context.ProjectTasks.Select(p => _mapper.Map<GetTaskDto>(p.ProjectId == id)).ToList();
+            //return _mapper.Map<GetTaskDto>(_context.ProjectTasks.FirstOrDefault(p => p.ProjectId == id));
         }
 
         public async Task<GetTaskDto> UpdateTask(int id,UpdateTaskDto updatedTask)
