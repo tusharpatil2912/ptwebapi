@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -20,7 +21,12 @@ namespace ProjectTracker.Services.ProjectService
         public async Task<List<GetProjectDto>> AddProject(AddProjectDto newProject)
         {
             Project project = _mapper.Map<Project>(newProject);
-            project.Id = _context.Projects.Max(p=> p.Id)+1;
+            // if(_context.Projects.FirstOrDefault(p => p.Id == 1)==null){
+            //     project.Id = 1;
+            // }else{
+            // project.Id = _context.Projects.Max(p=> p.Id)+1;
+            // }
+            project.CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
             _context.Projects.Add(project);
             _context.SaveChanges();
             return _context.Projects.Select(p => _mapper.Map<GetProjectDto>(p)).ToList();
@@ -35,5 +41,21 @@ namespace ProjectTracker.Services.ProjectService
         {
             return _mapper.Map<GetProjectDto>(_context.Projects.FirstOrDefault(p => p.Id == id));
         }
+
+        public async Task<GetProjectDto> UpdateProject(int id,UpdateProjectDto updatedproject)
+        {
+            GetProjectDto projectdto = new GetProjectDto();
+            Project project = _context.Projects.FirstOrDefault(p => p.Id == updatedproject.Id);
+            project.Name = updatedproject.Name;
+            project.Description =updatedproject.Description;
+            project.Owner = updatedproject.Owner;
+            project.SME = updatedproject.SME;
+
+            projectdto = _mapper.Map<GetProjectDto>(project);
+            _context.SaveChanges();
+            return projectdto;
+
+        }
+
     }
 }

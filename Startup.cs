@@ -15,6 +15,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProjectTracker.Services.ProjectService;
+using ProjectTracker.Services.TaskService;
+using ProjectTracker.Services.IssueService;
+using ProjectTracker.Services.ProjectTeamService;
+using ProjectTracker.Services.ResourceService;
 using ProjectTracket.Data;
 
 namespace ProjectTracker
@@ -43,6 +47,10 @@ namespace ProjectTracker
             });
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IResourceService, ResourceService>();
+            services.AddScoped<IProjectTeamService, ProjectTeamService>();
+            services.AddScoped<IIssueService, IssueService>();
             services.AddDbContext<ProjectDBContext>(p => p.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
         }
 
