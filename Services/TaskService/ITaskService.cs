@@ -9,6 +9,7 @@ namespace ProjectTracker.Services.TaskService
     {
         Task<List<GetTaskDto>> GetAllTasks();
         Task<List<GetTaskDto>> GetTaskByProjectId(int id);
+        Task<GetTaskDto> GetTaskById(int id);
         Task<List<GetTaskDto>> AddTask(AddTaskDto newTask);
         Task<GetTaskDto> UpdateTask(int id,UpdateTaskDto Taskdto);
     }

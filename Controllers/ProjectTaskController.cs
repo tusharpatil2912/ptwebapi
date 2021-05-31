@@ -27,6 +27,11 @@ namespace ProjectTracker.Controllers
             return Ok(await _projectTaskService.GetTaskByProjectId(id));
         }
 
+        [HttpGet("taskid/{taskId}")]
+       public async Task<ActionResult> getTaskById(int taskId){
+            return Ok(await _projectTaskService.GetTaskById(taskId));
+        }
+
         [HttpPost]
         public async Task<ActionResult> addTask(AddTaskDto newTask){
             return Ok(await _projectTaskService.AddTask(newTask));
